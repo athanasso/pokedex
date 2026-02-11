@@ -1,50 +1,143 @@
-# Welcome to your Expo app 👋
+# 🔴 Pokédex App
 
-This is an [Expo](https://expo.dev) project created with [`create-expo-app`](https://www.npmjs.com/package/create-expo-app).
+A beautiful, high-performance Pokédex application built with React Native (Expo) and the PokeAPI.
 
-## Get started
+![React Native](https://img.shields.io/badge/React%20Native-0.81-blue)
+![Expo](https://img.shields.io/badge/Expo-SDK%2054-black)
+![TypeScript](https://img.shields.io/badge/TypeScript-5.9-blue)
 
-1. Install dependencies
+## ✨ Features
 
-   ```bash
-   npm install
-   ```
+- **📱 Home Screen**: Grid view with Pokemon cards showing ID, Name, Image, and Type badges
+- **♾️ Infinite Scroll**: Smooth loading of 1000+ Pokemon (20 at a time)
+- **🔍 Search**: Search Pokemon by name
+- **✨ Shiny Mode**: Toggle to view shiny sprites for all Pokemon
+- **🏷️ Filters**: Filter by **Type** (Fire, Water, etc.) and **Region** (Kanto, Johto, etc.)
+- **📄 Details Screen**:
+  - High-res official artwork
+  - Base stats with animated progress bars
+  - Evolution chain with navigation
+  - Moves list
+  - Abilities (including hidden ones)
+- **🎨 Dynamic Theming**: Background colors based on Pokemon's primary type
 
-2. Start the app
+## 🛠️ Tech Stack
 
-   ```bash
-   npx expo start
-   ```
+- **Framework**: React Native with Expo (SDK 54)
+- **State Management**: TanStack Query (React Query)
+- **Navigation**: Expo Router (Stack Navigator)
+- **Styling**: NativeWind (Tailwind CSS for React Native)
+- **List Performance**: FlashList by Shopify
+- **Type Safety**: TypeScript
 
-In the output, you'll find options to open the app in a
+## 📁 Project Structure
 
-- [development build](https://docs.expo.dev/develop/development-builds/introduction/)
-- [Android emulator](https://docs.expo.dev/workflow/android-studio-emulator/)
-- [iOS simulator](https://docs.expo.dev/workflow/ios-simulator/)
-- [Expo Go](https://expo.dev/go), a limited sandbox for trying out app development with Expo
-
-You can start developing by editing the files inside the **app** directory. This project uses [file-based routing](https://docs.expo.dev/router/introduction).
-
-## Get a fresh project
-
-When you're ready, run:
-
-```bash
-npm run reset-project
+```
+pokedex/
+├── app/                      # Expo Router pages
+│   ├── _layout.tsx          # Root layout with providers
+│   ├── index.tsx            # Home screen with Pokemon grid
+│   └── pokemon/
+│       └── [id].tsx         # Pokemon details screen
+├── components/               # Reusable UI components
+│   ├── EvolutionChain.tsx   # Evolution chain display
+│   ├── LoadingSpinner.tsx   # Pokeball-themed loading
+│   ├── MovesList.tsx        # Scrollable moves grid
+│   ├── PokemonCard.tsx      # Pokemon grid card
+│   ├── SearchBar.tsx        # Search with type filter modal
+│   ├── StatBar.tsx          # Animated stat progress bar
+│   └── TypeBadge.tsx        # Type indicator badge
+├── constants/
+│   └── pokemon.ts           # Type colors, gradients, stat names
+├── hooks/
+│   └── usePokemon.ts        # TanStack Query hooks
+├── services/
+│   └── pokeApi.ts           # PokeAPI service functions
+├── types/
+│   └── pokemon.ts           # TypeScript interfaces
+├── babel.config.js          # Babel configuration
+├── metro.config.js          # Metro bundler config
+├── tailwind.config.js       # Tailwind/NativeWind config
+└── global.css               # Global styles
 ```
 
-This command will move the starter code to the **app-example** directory and create a blank **app** directory where you can start developing.
+## 🚀 Getting Started
 
-## Learn more
+### Prerequisites
 
-To learn more about developing your project with Expo, look at the following resources:
+- Node.js 18+
+- npm or yarn
+- Expo CLI (`npm install -g expo-cli`)
 
-- [Expo documentation](https://docs.expo.dev/): Learn fundamentals, or go into advanced topics with our [guides](https://docs.expo.dev/guides).
-- [Learn Expo tutorial](https://docs.expo.dev/tutorial/introduction/): Follow a step-by-step tutorial where you'll create a project that runs on Android, iOS, and the web.
+### Installation
 
-## Join the community
+1. Clone the repository:
+```bash
+git clone <repo-url>
+cd pokedex
+```
 
-Join our community of developers creating universal apps.
+2. Install dependencies:
+```bash
+npm install
+```
 
-- [Expo on GitHub](https://github.com/expo/expo): View our open source platform and contribute.
-- [Discord community](https://chat.expo.dev): Chat with Expo users and ask questions.
+3. Start the development server:
+```bash
+npm start
+```
+
+4. Run on your device or simulator:
+- Press `a` for Android
+- Press `i` for iOS
+- Press `w` for Web
+
+## 📦 Key Dependencies
+
+```json
+{
+  "@tanstack/react-query": "^5.x",
+  "@shopify/flash-list": "^1.x",
+  "nativewind": "^4.x",
+  "tailwindcss": "^3.x",
+  "expo-linear-gradient": "^14.x",
+  "expo-router": "^6.x",
+  "expo-image": "^3.x",
+  "react-native-reanimated": "^4.x"
+}
+```
+
+## 🎨 Design Features
+
+- **Gradient Cards**: Each Pokemon card has a gradient based on its primary type
+- **Pokeball Decorations**: Subtle pokeball patterns in UI elements
+- **Smooth Animations**: Stat bars animate when entering the details screen
+- **Dark Theme**: Modern dark interface optimized for OLED displays
+- **Responsive Grid**: 2-column grid adapts to different screen sizes
+
+## 📡 API
+
+This app uses the [PokeAPI](https://pokeapi.co/) - a free RESTful Pokemon API.
+
+### Endpoints Used:
+- `GET /pokemon` - List Pokemon with pagination
+- `GET /pokemon/{id}` - Get Pokemon details
+- `GET /pokemon-species/{id}` - Get species info (for evolution chain)
+- `GET /evolution-chain/{id}` - Get evolution chain
+- `GET /type/{type}` - Get Pokemon by type
+
+## 🔧 Performance Optimizations
+
+- **FlashList**: Efficiently renders 1000+ items with recycling
+- **TanStack Query**: Aggressive caching (30min stale time)
+- **Image Caching**: expo-image with memory+disk cache
+- **Memoization**: React.memo on all list components
+- **Lazy Loading**: Infinite scroll loads only what's needed
+
+## 📄 License
+
+MIT License - Feel free to use this project for learning and personal use!
+
+---
+
+Made with ❤️ and ⚡ by a Pokémon fan
