@@ -1,22 +1,24 @@
 
 import { FlashList } from '@shopify/flash-list';
+import { useRouter } from 'expo-router';
 import React, { useCallback, useMemo, useState } from 'react';
-import { ActivityIndicator, StyleSheet, Text, View } from 'react-native';
+import { ActivityIndicator, StyleSheet, Text, TouchableOpacity, View } from 'react-native';
 import LoadingSpinner from '../components/LoadingSpinner';
 import PokemonCard from '../components/PokemonCard';
 import SearchBar from '../components/SearchBar';
 import { Game, Region } from '../constants/pokemon';
 import {
-  useLegendaryPokemon,
-  useMythicalPokemon,
-  usePokemonByRegion,
-  usePokemonByType,
-  usePokemonList,
+    useLegendaryPokemon,
+    useMythicalPokemon,
+    usePokemonByRegion,
+    usePokemonByType,
+    usePokemonList,
 } from '../hooks/usePokemon';
 import { searchPokemon } from '../services/pokeApi';
 import { PokemonCardData, PokemonType } from '../types/pokemon';
 
 export default function HomeScreen() {
+  const router = useRouter();
   const [searchQuery, setSearchQuery] = useState('');
   const [searchResults, setSearchResults] = useState<PokemonCardData[] | null>(null);
   const [isSearching, setIsSearching] = useState(false);
@@ -421,6 +423,22 @@ export default function HomeScreen() {
         contentContainerStyle={styles.listContent}
         showsVerticalScrollIndicator={false}
       />
+      <TouchableOpacity
+        style={styles.fab}
+        onPress={() => router.push('/scanner')}
+        activeOpacity={0.85}
+      >
+        {/* Pokéball — top red half */}
+        <View style={styles.fabTop} />
+        {/* Pokéball — bottom white half */}
+        <View style={styles.fabBottom} />
+        {/* Horizontal band */}
+        <View style={styles.fabBand} />
+        {/* Center button */}
+        <View style={styles.fabCenterRing}>
+          <View style={styles.fabCenterDot} />
+        </View>
+      </TouchableOpacity>
     </View>
   );
 }
@@ -496,5 +514,56 @@ const styles = StyleSheet.create({
     fontSize: 14,
     color: '#888',
     textAlign: 'center',
+  },
+
+  fab: {
+    position: 'absolute',
+    bottom: 28,
+    alignSelf: 'center',
+    left: '50%',
+    marginLeft: -36,   // half of 72
+    width: 72,
+    height: 72,
+    borderRadius: 36,
+    backgroundColor: '#fff',
+    borderWidth: 3,
+    borderColor: '#111',
+    overflow: 'hidden',
+    justifyContent: 'center',
+    alignItems: 'center',
+    elevation: 10,
+    shadowColor: '#000',
+    shadowOffset: { width: 0, height: 4 },
+    shadowOpacity: 0.45,
+    shadowRadius: 8,
+  },
+  fabTop: {
+    position: 'absolute',
+    top: 0, left: 0, right: 0,
+    height: 36,
+    backgroundColor: '#e3000b',
+  },
+  fabBottom: {
+    position: 'absolute',
+    bottom: 0, left: 0, right: 0,
+    height: 36,
+    backgroundColor: '#fff',
+  },
+  fabBand: {
+    position: 'absolute',
+    left: 0, right: 0,
+    height: 6,
+    top: 33,
+    backgroundColor: '#111',
+  },
+  fabCenterRing: {
+    width: 22, height: 22, borderRadius: 11,
+    backgroundColor: '#111',
+    justifyContent: 'center', alignItems: 'center',
+    zIndex: 2,
+  },
+  fabCenterDot: {
+    width: 13, height: 13, borderRadius: 7,
+    backgroundColor: '#fff',
   },
 });

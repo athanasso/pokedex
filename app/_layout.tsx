@@ -74,11 +74,18 @@ export default function RootLayout() {
             }}
           />
           <Stack.Screen
-            name="pokemon/[id]"
             options={{
               title: '',
               headerTransparent: true,
               headerBackTitle: 'Back',
+            }}
+          />
+          <Stack.Screen
+            name="scanner"
+            options={{
+              headerShown: false,
+              presentation: 'modal',
+              animation: 'slide_from_bottom',
             }}
           />
         </Stack>
